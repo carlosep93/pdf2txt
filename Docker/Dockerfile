@@ -26,8 +26,6 @@ RUN make install
 WORKDIR /app
 
 
-
-
 RUN wget  https://github.com/tesseract-ocr/tessdata/raw/main/spa.traineddata -P /usr/share/tesseract-ocr/4.00/tessdata 
 RUN wget  https://github.com/tesseract-ocr/tessdata/raw/main/cat.traineddata -P /usr/share/tesseract-ocr/4.00/tessdata
 RUN wget  https://github.com/tesseract-ocr/tessdata/raw/main/eus.traineddata -P /usr/share/tesseract-ocr/4.00/tessdata
@@ -35,12 +33,10 @@ RUN wget  https://github.com/tesseract-ocr/tessdata/raw/main/glg.traineddata -P 
 
 ENV TESSDATA_PREFIX /usr/share/tesseract-ocr/4.00/tessdata/
 
-
-
-
 # pdf2txt installation
 
-RUN git clone --depth 1 --branch main https://github.com/nextprocurement/pdf2txt.git
+WORKDIR /app
+RUN git clone --depth 1 --branch main https://github.com/carlosep93/pdf2txt.git
 WORKDIR /app/pdf2txt
 RUN python3 -m pip install --use-pep517  --no-cache-dir -r requirements.txt
 
@@ -51,14 +47,20 @@ ENV LD_LIBRARY_PATH /usr/local/lib:$LD_LIBRARY_PATH
 WORKDIR /app/pdf2txt/pipeline/models/nextprocurement_pdfutils/
 RUN git clone --depth 1 https://huggingface.co/BSC-LT/NextProcurement_pdfutils /app/pdf2txt/pipeline/models/nextprocurement_pdfutils/
 
+# MT Model downloading
 
+RUN mkdir /app/pdf2txt/pipeline/models/nllb
+WORKDIR /app/pdf2txt/pipeline/models/nllb
+
+RUN GIT_LFS_SKIP_SMUDGE=1 git clone https://huggingface.co/facebook/nllb-200-distilled-600M
+RUN wget https://huggingface.co/facebook/nllb-200-distilled-600M/resolve/main/tokenizer.json?download=true -O tokenizer.json
+RUN wget https://huggingface.co/facebook/nllb-200-distilled-600M/resolve/main/sentencepiece.bpe.model?download=true -O sentencepiece.bpe.model
+RUN wget https://huggingface.co/facebook/nllb-200-distilled-600M/resolve/main/pytorch_model.bin?download=true  -O pytorch_model.bin
 
 
 # Cleaning
 
 RUN rm -rf /app/poppler/ && rm -rf /var/cache/apt/archives/
-
-
 
 # APP on container
 WORKDIR /app/pdf2txt
