@@ -11,3 +11,4 @@ pdfminer==20191125
 pybind11==2.10.4
 poppler-utils==0.1.0
 python-poppler==0.3.0
+ctranslate2
