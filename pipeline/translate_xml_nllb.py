@@ -116,14 +116,16 @@ output_field='translation'
 
 
 f = data_dir + '/' + args.parquet_file
-print('Reading file:', f)
 out_file = get_out_file(f,out_dir)
 
 if os.path.isfile(out_file):
     print('File already processed:', f)
     exit(0)
 
+print('Reading file:', f)
 df = pd.read_parquet(f)
+print('File read successfully')
+
 df[output_field] = pd.Series(dtype='str')
 for row_index,row in df.iterrows():
     print ('Translating sentece', row_index, "out of", len(df))
