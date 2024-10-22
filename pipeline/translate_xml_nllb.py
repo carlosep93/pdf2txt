@@ -80,6 +80,7 @@ def get_out_file(data_file, out_dir):
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--model_dir", help="Directory where the model is stored.")
+parser.add_argument("--tokenizer_dir", help="Directory where the tokenizer is stored.")
 parser.add_argument("--data_dir", help="Directory where the data is stored.")
 parser.add_argument("--output_dir", help="Directory where the output is stored.")
 parser.add_argument("--parquet_file", help="Name of the .tsv file to translate.")
@@ -92,8 +93,10 @@ args = parser.parse_args()
 
 #Init model to translate
 model_dir=args.model_dir
+tokenizer_dir=args.tokenizer_dir
 language=args.tok_lang
-spm=transformers.AutoTokenizer.from_pretrained(model_dir, src_lang=args.src_lang)
+
+spm=transformers.AutoTokenizer.from_pretrained(tokenizer_dir, src_lang=args.src_lang)
 
 try:
     translator = ctranslate2.Translator(model_dir, device="cuda")

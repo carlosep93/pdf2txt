@@ -58,6 +58,9 @@ RUN wget https://huggingface.co/facebook/nllb-200-distilled-600M/resolve/main/to
 RUN wget https://huggingface.co/facebook/nllb-200-distilled-600M/resolve/main/sentencepiece.bpe.model?download=true -O sentencepiece.bpe.model
 RUN wget https://huggingface.co/facebook/nllb-200-distilled-600M/resolve/main/pytorch_model.bin?download=true  -O pytorch_model.bin
 
+#Convert model to ct2 format
+WORKDIR /app/pdf2txt/pipeline/models/nllb/
+RUN  ct2-transformers-converter --model nllb-200-distilled-600M --output_dir nllb-ct2
 
 # Cleaning
 
