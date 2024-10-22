@@ -94,7 +94,12 @@ args = parser.parse_args()
 model_dir=args.model_dir
 language=args.tok_lang
 spm=transformers.AutoTokenizer.from_pretrained(model_dir, src_lang=args.src_lang)
-translator = ctranslate2.Translator(model_dir, device="cuda")
+
+try:
+    translator = ctranslate2.Translator(model_dir, device="cuda")
+except:
+    translator = ctranslate2.Translator(model_dir, device="cpu")
+
 tokenizer=TextTokenizer(language)
 
 

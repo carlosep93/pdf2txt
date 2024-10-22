@@ -25,7 +25,7 @@ tok_lang='Galician'
 
 tsv_file='nextprocurement_mx_20240626_16.clean'
 
-python translate_tsv_xml_nllb.py \
+python translate_xml_nllb.py \
     --model_dir $model_dir \
     --data_dir  $data_dir \
     --output_dir $output_dir \

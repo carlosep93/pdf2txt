@@ -51,8 +51,9 @@ RUN git clone --depth 1 https://huggingface.co/BSC-LT/NextProcurement_pdfutils /
 
 RUN mkdir /app/pdf2txt/pipeline/models/nllb
 WORKDIR /app/pdf2txt/pipeline/models/nllb
-
 RUN GIT_LFS_SKIP_SMUDGE=1 git clone https://huggingface.co/facebook/nllb-200-distilled-600M
+
+WORKDIR /app/pdf2txt/pipeline/models/nllb/nllb-200-distilled-600M
 RUN wget https://huggingface.co/facebook/nllb-200-distilled-600M/resolve/main/tokenizer.json?download=true -O tokenizer.json
 RUN wget https://huggingface.co/facebook/nllb-200-distilled-600M/resolve/main/sentencepiece.bpe.model?download=true -O sentencepiece.bpe.model
 RUN wget https://huggingface.co/facebook/nllb-200-distilled-600M/resolve/main/pytorch_model.bin?download=true  -O pytorch_model.bin
