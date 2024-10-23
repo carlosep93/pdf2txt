@@ -111,7 +111,7 @@ data_dir=args.data_dir
 out_dir=args.output_dir
 target_prefix=[args.tgt_lang]
 max_sentence_batch=40
-input_field='text'
+input_field='content'
 output_field='translation'
 
 
