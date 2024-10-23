@@ -129,7 +129,8 @@ print('File read successfully')
 df[output_field] = pd.Series(dtype='str')
 for row_index,row in df.iterrows():
     print ('Translating sentece', row_index, "out of", len(df))
-    text = _normalize_input_string(row[input_field].strip())
+    text = row[input_field].decode('utf-8')
+    text = _normalize_input_string(text.strip())
     df.loc[row_index,[output_field]] = translate_xml_tree(text)
 
 print('Writing output file:', out_file)
